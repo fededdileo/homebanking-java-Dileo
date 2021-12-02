@@ -1,0 +1,47 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+header{
+    background-color: firebrick;
+    color: white;
+    text-align: center;
+    border-bottom: 4px solid black;
+}
+#bankLogo{
+    width: 15vh;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+h1{
+    padding-top: 2rem;
+    padding-bottom: 2rem;
+    font-size: 4rem;
+    font-family: 'Pacifico';
+}
+
+#app{
+    min-height: 70vh;
+    margin-top: 2rem;
+}
+table{
+    text-align: center;
+}
+h2{
+    margin-bottom: 1rem;
+    font-size: 3rem;
+    font-family: "Times New Roman", Times, serif;
+}
+
+footer{
+    background-color: firebrick;
+    color: white;
+    text-align: center;
+    padding-top: 1vh;
+    padding-bottom: .5vh;
+    align-items: center;
+    border-top: 4px solid black;
+    font-size: 2rem;
+    font-family: 'Pacifico';
+}

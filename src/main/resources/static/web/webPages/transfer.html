@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Transactions</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://pro.fontawesome.com/releases/v5.10.0/css/all.css"
+        integrity="sha384-AYmEC3Yw5cVb3ZcuHtOA93w35dYTsvhLPVnYs9eStHfGJvOvKxVfELGroGkvsg+p" crossorigin="anonymous" />
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css" />
+    <link rel="stylesheet" href="../css/transfer.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+
+</head>
+
+<body>
+    <div id="app">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+                <a class="navbar-brand" href="#"><i class="bi bi-bank2"></i> MindHub Brothers Home Banking</a>
+                <button class="navbar-toggler" type="button" data-bs-toggle="collapse"
+                    data-bs-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                    aria-label="Toggle navigation">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+                <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                    <ul class="navbar-nav">
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../webPages/accounts.html"><i
+                                    class="bi bi-person-circle"></i> Account</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../webPages/loan-application.html"><i
+                                    class="bi bi-cash-coin"></i> Loans</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../webPages/transfer.html"><i
+                                    class="bi bi-arrow-left-right"></i> Transactions</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../webPages/cards.html"><i
+                                    class="bi bi-credit-card-2-back"></i> Cards</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="../webPages/payments.html"><i
+                                    class="bi bi-wallet"></i> Payments</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="nav-link active" aria-current="page" href="#" @click="logout"><i
+                                    class="bi bi-box-arrow-right"></i> Sign Out</a>
+                        </li>
+                    </ul>
+                </div>
+            </div>
+        </nav>
+        <main>
+            <div class="bg-cover">
+                <!-- Transfer Section -->
+                <section id="transfer" class="transfer d-flex flex-column">
+                    <h2>New Transfer: </h2>
+                    <form action="" @submit.prevent="transferValidation" @reset.prevent="resetTransfer"
+                        class="animate__animated animate__zoomIn">
+                        <div class="d-flex flex-row justify-content-center">
+                            <div class="d-flex flex-column mt-4 mx-2 labelColumn">
+                                <label class="my-1" for="fromAccount">From Account: </label>
+                                <label class="my-1" for="reciever">Destination Account: </label>
+                                <label class="my-1" for="toAccount">To Account: </label>
+                                <label class="my-1" for="transferAmount">Transfer Amount: </label>
+                                <label class="my-1" for="transferAmount">Description: </label>
+                            </div>
+                            <div class="d-flex flex-column mt-4 mx-2 inputColumn">
+                                <select class="my-1" name="fromAccount" id="fromAccount" v-model="fromAccount">
+                                    <option v-for="acc in client.accounts" :value="acc.number">
+                                        {{acc.number}}</option>
+                                </select>
+                                <select class="my-1" name="reciever" id="reciever" v-model="isOwner"
+                                    @change="resetToAccount">
+                                    <option value="" selected disabled>- Select -</option>
+                                    <option value="own">Own</option>
+                                    <option value="third">Third Party</option>
+                                </select>
+                                <select v-show="isOwner === 'own'" class="my-1" name="toAccount" v-model="toAccount">
+                                    <option v-for="acc in availableAcc()" :value="acc.number"
+                                        :disabled="disabledToAcc(acc)">
+                                        {{acc.number}}</option>
+                                </select>
+                                <div v-show="isOwner === 'third'" class="my-1">
+                                    <input type="text" name="toAccount" maxlength="11" size="11" v-model="toAccount">
+                                </div>
+                                <div v-show="isOwner === ''" class="my-1">
+                                    <input type="number" name="toAccount" maxlength="11" size="11" v-model="toAccount"
+                                        placeholder="Seleccione Destinatario" disabled>
+                                </div>
+                                <div class="my-1">
+                                    <input type="number" name="transferAmount" id="transferAmount" maxlength="4"
+                                        size="11" v-model="transferAmount">
+                                </div>
+                                <div class="my-1">
+                                    <input type="text" name="transferDesc" id="transferDesc" maxlength="20" size="20"
+                                        v-model="transferDesc">
+                                </div>
+                            </div>
+
+                        </div>
+                        <div class="d-flex justify-content-between p-3">
+                            <button class="btn btn-danger" type="reset" id="reset">Cancel</button>
+                            <button class="btn btn-success" type="submit" data-bs-toggle="modal"
+                                data-bs-target="#transferModal" :disabled="transferData">
+                                Confirm
+                            </button>
+                        </div>
+                    </form>
+                </section>
+                <!-- Transaction Section -->
+                <section id="transaction" class="d-flex flex-column justify-content-center transaction">
+                    <h2>Review your transactions: </h2>
+                    <div class="d-flex gap-4 justify-content-center flex-wrap transDates">
+                        <div class="d-flex flex-column">
+                            <label for="accountNumber">Select Account: </label>
+                            <select name="accountNumber" v-model="transAccount" @change="transactionFilter">
+                                <option value="" selected disabled>- Select -</option>
+                                <option v-for="account in client.accounts" :value="account.number">{{account.number}}
+                                </option>
+                            </select>
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="fromDate">From Date: </label>
+                            <input type="date" name="fromDate" v-model="fromDate">
+                        </div>
+                        <div class="d-flex flex-column">
+                            <label for="toDate">To Date: </label>
+                            <input type="date" name="toDate" v-model="toDate">
+                        </div>
+                        <button @click="getTransactions"><i class="fas fa-search"></i></button>
+                        <button @click="getTransactionsToPDF"><i class="far fa-file-pdf"></i></button>
+                    </div>
+                    <div class="containerLoans mt-5">
+                        <ul class="responsive-table">
+                            <li class="table-header animate__animated animate__zoomInUp">
+                                <div class="col col-1">Date: </div>
+                                <div class="col col-2">Description: </div>
+                                <div class="col col-3">Amount: </div>
+                                <div class="col col-3">Balance: </div>
+                            </li>
+                            <li v-if="transactions != ''" v-for="transaction in transArraySorted()"
+                                class="table-row animate__animated animate__zoomInUp">
+                                <div class="col col-1" data-label="Date">
+                                    {{transactionDate(transaction.creationDate)}}</div>
+                                <div class="col col-2" data-label="Description">{{transaction.description}}</div>
+                                <div class="col col-3" data-label="Amount"
+                                    :class="transaction.type == 'DEBITO' ? 'text-danger' : 'text-success'">
+                                    {{formatBalance(transaction.amount)}}</div>
+                                <div class="col col-4" data-label="Balance">{{formatBalance(transaction.balance)}}</div>
+                            </li>
+                            <li v-else class="table-row animate__animated animate__zoomInUp">
+                                <div class="col col-5 " data-label="New Loan">
+                                    <strong> - Filter by Account and Dates - </strong>
+                                </div>
+                            </li>
+                        </ul>
+                    </div>
+                </section>
+                <!-- Transfer Modal -->
+                <div class="modal fade" id="transferModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                    aria-hidden="true">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">Tranfer confirmation</h5>
+                                <button type="button" class="btn-close" @click="resetTransfer" data-bs-dismiss="modal"
+                                    aria-label="Close"></button>
+                            </div>
+                            <div class="modal-body d-flex flex-direction-column justify-content-evenly">
+                                <div>
+                                    <h6>Origin Account: <span>{{fromAccount}}</span></h6>
+                                    <h6>Destination Account: <span>{{toAccount}}</span></h6>
+                                    <h6>Transfer Amount: <span>{{formatBalance(transferAmount)}}</span></h6>
+                                    <h6>Description: <span>{{transferDesc}}</span></h6>
+                                </div>
+                                <div>
+                                    <h6>Current Balance: {{formatBalance(balanceFromAccount)}}</h6>
+                                    <!-- <h6>Transfer Amount: {{formatBalance(transferAmount)}}</h6> -->
+                                    <h6 v-if="transactions.type == 'CREDIT'" class="text-danger">{{formatBalance(transferAmount)}}</h6>
+                                    <h6 v-else class="text-success">{{formatBalance(transferAmount)}}</h6>
+                                    <h6>After Balance: {{formatBalance(afterBalance)}}</h6>
+                                    <h6>Destination: {{destinationAccount}}</h6>
+                                </div>
+                            </div>
+                            <div class="modal-footer">
+                                <button type="button" class="btn btn-danger" data-bs-dismiss="modal"
+                                    @click="resetTransfer">Cancel</button>
+                                <button type="button" class="btn btn-success" @click="transferPost"
+                                    data-bs-dismiss="modal"
+                                    :disabled="afterBalance < 0 || destinationAccount == ''">Confirm</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </main>
+    </div>
+    <footer>
+        <p>&copy; Mindhub Brothers Homebanking - Federico Demian Dileo</p>
+    </footer>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../js/transfer.js"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+</body>
+
+</html>
+</body>
+
+</html>

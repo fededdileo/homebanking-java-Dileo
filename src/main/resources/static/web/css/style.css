@@ -1,0 +1,192 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+nav{
+    background-color:#D83A56 ;
+    font-size: 2vh;
+}
+#dropAccount{
+    background-color: #F5C0C0;
+    border: 4px solid #FDF6F0;
+}
+#dropAccount li a{
+    color:black;
+    font-size: 2vh;
+}
+h2{
+    text-align: center;
+}
+table{
+    text-align: center; 
+}
+thead{
+    background-color: #D83A56;
+}
+tbody{
+    background-color: white;
+}
+
+h2{
+    font-size: 3rem;
+    font-family: "Times New Roman", Times, serif;
+}
+h3{
+    margin-bottom: 1rem;
+    font-family: "Times New Roman", Times, serif;
+}
+#profile{
+    width: 8vw;
+}
+main{
+    /* background-color: #F5C0C0; */
+    min-height: 95vh;
+    background-image: url(../assets/background3.jpg);
+    background-size: cover;
+    padding-top: 5vh;
+}
+#offcanvass{
+    background-color: #FF616D;
+    text-align: center;
+    border-left: 4px solid #FDF6F0;
+}
+
+#clientN{
+    font-size: 2.5rem;
+    font-family: 'Glory', sans-serif;
+}
+#clientName{
+    font-size:1.5rem;
+    font-family: 'Glory', sans-serif;
+}
+#clientEmail{
+    font-size: 1.5rem;
+    font-family: 'Glory', sans-serif;
+}
+.modal-content{
+	background-color: #FF616D;
+}
+
+#logovisa{
+	width: 1vw;
+	height: 1vh;
+}
+.chip{
+	width: 2vw;
+	height: 3vh;
+}
+.container{
+	position: relative;
+	width: 40vw;
+	height: 30vh;
+	perspective: 1000px;
+	transform-style: preserve-3d;
+	margin-top: 2rem;
+
+}
+form{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    padding: 3vw;
+    /* background-color: hsl(208, 96%, 18%, 0.8); */
+    min-width: 20rem;
+	/* margin-top: 10vh; */
+	margin-left: 10vw;
+	margin-right: 10vw;
+	background-color: #FF616D;
+    box-shadow: #FF616D 3px 3px 30px 3px;
+    border-radius: 1%;
+}
+
+form input{
+    max-width: 20vw;
+    margin-bottom: 2vh;
+    border: 1px solid;
+    padding: 0.2vw;
+    min-width: 10rem;
+}
+
+form button{
+    max-width: 5vw;
+    border: 1px solid;
+    padding: 0.2rem;
+    
+}
+
+.btn{
+	border: 1px solid white;
+	background: rgba(255, 255, 255, 0.21);
+	padding: 10px 20px;
+	border-radius: 20px;
+	text-decoration: none;
+	color: white;
+	transition: all 0.5s;
+    background-color:#D83A56 ;
+
+}
+.btn:hover{
+	padding: 10px 20px;
+	/* background: white; */
+    background: white;
+	color:black;
+    border: 2px solid #D83A56;
+}
+.btn .btn-danger .table:hover{
+    padding: 5px 10px;
+}
+footer{
+    text-align: center;
+    color: white;
+    padding-top: 1vh;
+    padding-bottom: -4vh;
+    background-color: #D83A56;
+    position: fixed;
+    bottom: 0;
+    width: 100vw;
+    max-width: 100vw;
+}
+
+@media only screen and (min-width: 600px){
+	.grupo .numero,
+.grupo .nombre,
+.grupo .inicio,
+.grupo .expiracion {
+	color: #fff;
+	font-size: 2vh;
+	text-transform: uppercase;
+}
+}
+@media only screen and (max-width: 599px){
+    h1{
+        font-size: 2rem;
+    }
+    #clientN{
+        font-size: 1.5rem;
+    }
+    #clientName{
+        font-size: 1.5rem;
+    }
+    #clientEmail{
+        font-size: 1.5rem;
+    }
+
+	.container{
+		width: 70vw;
+		height: 50vh;
+	}
+	#chip{
+		width: .5vh;
+		height: .5vh;
+	}
+	#logoVisa{
+		width: .5vw;
+		height: .5vh;
+	}
+	.grupo .label {
+		font-size: 8px;
+		
+		margin-bottom: 3px;
+	}
+}

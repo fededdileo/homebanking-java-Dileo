@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+    integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+  <link rel="stylesheet" href="../css/style.css">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+  <title>🏛 Account</title>
+</head>
+
+<body>
+  <div id="app" class="row">
+    <nav class="navbar navbar-expand-lg navbar-dark">
+      <div class="container-fluid">
+        <a class="navbar-brand" href="#"><i class="bi bi-bank2"></i> MindHub Brothers Home Banking</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+          aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavDropdown">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../webPages/accounts.html"><i class="bi bi-person-circle"></i> Account</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../webPages/loan-application.html"><i class="bi bi-cash-coin"></i> Loans</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../webPages/transfer.html"><i class="bi bi-arrow-left-right"></i> Transactions</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../webPages/cards.html"><i class="bi bi-credit-card-2-back"></i> Cards</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="../webPages/payments.html"><i class="bi bi-wallet"></i> Payments</a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="#" @click="logout"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </nav>
+    <div class="container-fluid">
+      <main class="row">
+        <div id="accountTable" class="col-6 offset-3 mt-5">
+          <h2>Transactions</h2>
+          <table class="table table-hover">
+            <thead>
+              <th scope="col">AMOUNT</th>
+              <th scope="col">DESCRIPTION</th>
+              <th scope="col">CREATION DATE</th>
+              <th scope="col">BALANCE</th>
+            </thead>
+            <tbody v-for="transaction in transactions">
+              <td v-if="transaction.type == 'CREDIT'" class="text-danger">$ {{transaction.amount}}</td>
+              <td v-else class="text-success">$ {{transaction.amount}}</td>
+              <td v-if="transaction.type == 'CREDIT'" class="text-danger">{{transaction.description}}</td>
+              <td v-else class="text-success">{{transaction.description}}</td>
+              <td v-if="transaction.type == 'CREDIT'" class="text-danger">{{ formatDate(transaction.creationDate)}}</td>
+              <td v-else class="text-success">{{formatDate(transaction.creationDate)}}</td>
+              <td>{{transaction.balance}}</td>
+            </tbody>
+          </table>
+          <a href="./accounts.html"><button type="button" class="btn btn-danger">Back to Account</button></a>
+        </div>
+        
+      </main>
+    </div>
+  </div>
+</body>
+<footer>
+  <p>&copy; Mindhub Brothers Homebanking - Federico Demian Dileo</p>
+</footer>
+
+
+<script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+  integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+<script src="https://unpkg.com/vue@next"></script>
+<script src="../js/account.js"></script>
+</body>
+</html>

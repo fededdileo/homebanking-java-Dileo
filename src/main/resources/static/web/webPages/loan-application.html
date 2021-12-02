@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.0/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-KyZXEAg3QhqLMpG8r+8fhAXLRk2vvoC2f3B09zVXn8CA5QIVfZOJ3BCsw2P0p/We" crossorigin="anonymous">
+    <link rel="stylesheet" href="../css/style.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.7.1/font/bootstrap-icons.css">
+    <title>🏛 Transactions</title>
+</head>
+
+<body>
+    <div id="app" class="row">
+        <nav class="navbar navbar-expand-lg navbar-dark">
+            <div class="container-fluid">
+              <a class="navbar-brand" href="#"><i class="bi bi-bank2"></i> MindHub Brothers Home Banking</a>
+              <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNavDropdown"
+                aria-controls="navbarNavDropdown" aria-expanded="false" aria-label="Toggle navigation">
+                <span class="navbar-toggler-icon"></span>
+              </button>
+              <div class="collapse navbar-collapse" id="navbarNavDropdown">
+                <ul class="navbar-nav">
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../webPages/accounts.html"><i class="bi bi-person-circle"></i> Account</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../webPages/loan-application.html"><i class="bi bi-cash-coin"></i> Loans</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../webPages/transfer.html"><i class="bi bi-arrow-left-right"></i> Transactions</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../webPages/cards.html"><i class="bi bi-credit-card-2-back"></i> Cards</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="../webPages/payments.html"><i class="bi bi-wallet"></i> Payments</a>
+                  </li>
+                  <li class="nav-item">
+                    <a class="nav-link active" aria-current="page" href="#" @click="logout"><i class="bi bi-box-arrow-right"></i> Sign Out</a>
+                  </li>
+                </ul>
+              </div>
+            </div>
+          </nav>
+        <div class="container-fluid">
+            <main>
+                <form>
+                    <h2>Loans</h2>
+
+                    <label for="typeLoan">Loan Type</label>
+                    <select v-model="loanId" class="my-2" name="" id="typeLoan">
+                        <option value="">Select Loan</option>
+                        <option v-for="loan in loans" :value="loan.id">{{loan.name}} </option>
+                    </select>
+                    <P style="color: white;" v-if="loanId != 0">Max Amount Loan ${{loans[loanId - 1].maxAmount}}</P>
+                    <P style="color: white;" v-if="loanId != 0">Interest %{{loans[loanId - 1].porcentaje * 100}}</P>
+
+                    <label v-if="loanId != 0" class="mt-2" for="payments">Payments</label>
+                    <select v-if="loanId != 0" v-model="loanPayment" class="my-2" name="" id="payments">
+                        <option value="">Select</option>
+                        <option v-for="loan in loans[loanId - 1].payments" :value="loan">{{loan}}</option>
+
+                    </select>
+
+
+                    <label for="account">Account Destiny</label>
+                    <select v-model="accountDest" name="" id="account">
+                        <option value="">Select</option>
+                        <option v-for="account in accounts" :value="account.number">{{account.number}}</option>
+                    </select>
+
+                    <label class="mt-2" for="amount">Amount</label>
+                    <input v-model="amount" class="my-2" type="number" id="amount" placeholder="Min 10000"
+                        style="text-align: center;">
+
+                    <!-- Button trigger modal -->
+                    <input type="button" class="btn btn-danger" data-bs-toggle="modal"
+                        data-bs-target="#exampleModal" value="Apply"
+                        :disabled="amount < 10000 || amount > loans[loanId - 1].maxAmount || accountDest == 0 || loanPayment == 0 ">
+
+
+
+                    <!-- Modal -->
+                    <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel"
+                        aria-hidden="true">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+
+                                <div class="modal-body">
+                                    Are you sure you want to make the loan? </div>
+                                <div class="modal-footer">
+                                    <input type="button" class="btn btn-secondary" data-bs-dismiss="modal"
+                                        value="Close">
+                                    <input type="button" class="btn btn-primary" value="Apply" @click="completeLoan()">
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </main>
+        </div>
+    </div>
+    <footer>
+        <p>&copy; Mindhub Brothers Homebanking - Federico Demian Dileo</p>
+    </footer>
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js"
+        integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM"
+        crossorigin="anonymous"></script>
+    <script src="https://unpkg.com/sweetalert/dist/sweetalert.min.js"></script>
+    <script src="https://unpkg.com/vue@next"></script>
+    <script src="../js/loan-application.js"></script>
+</body>
+
+</html>
